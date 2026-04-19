@@ -40,3 +40,6 @@ Conclusion:
 | v5 | mean reversion | 100032.33 | 122 | 0 | 0 | Window 8, threshold 0.02 |
 | v6 | mean reversion + volume filter | 100043.36 | 36 | 0 | 0 | Best Person 2 version |
 | v7 | mean reversion + stricter volume filter | 100042.30 | 34 | 0 | 0 | Slightly worse than v6 |
+
+- hybrid + continuous small trading → Final_Value: 99720.56, Executed: 510552, Rejected: 0, Timeouts: 0
+- Result: failed due to overtrading, reverted
