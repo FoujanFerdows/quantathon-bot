@@ -43,3 +43,6 @@ Conclusion:
 
 - hybrid + continuous small trading → Final_Value: 99720.56, Executed: 510552, Rejected: 0, Timeouts: 0
 - Result: failed due to overtrading, reverted
+
+- modified confirmation version → 100008.75, 2 trades
+result: too restrictive, reverted
