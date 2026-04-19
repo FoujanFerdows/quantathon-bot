@@ -13,6 +13,8 @@ BOTS = [
 def make_note(version, idea, result):
     executed = result["Executed"]
     final_value = result["Final_Value"]
+    sharpe = result.get("Sharpe_Ratio", 0)
+    max_drawdown = result.get("Max_Drawdown", 0)
 
     notes = []
 
@@ -34,6 +36,14 @@ def make_note(version, idea, result):
         notes.append("Loss-making")
     else:
         notes.append("Flat result")
+
+    if sharpe > 1:
+        notes.append("Good risk-adjusted returns")
+    elif sharpe < 0:
+        notes.append("Negative risk-adjusted returns")
+
+    if max_drawdown > 0.2:
+        notes.append("Large drawdown")
 
     return "; ".join(notes)
 
@@ -64,9 +74,13 @@ def main():
                 "Version": version,
                 "Idea": idea,
                 "Final Value": result["Final_Value"],
+                "Total Return %": result["Total_Return_Pct"],
+                "Sharpe Ratio": result["Sharpe_Ratio"],
+                "Max Drawdown": result["Max_Drawdown"],
                 "Executed": result["Executed"],
                 "Rejected": result["Rejected"],
                 "Timeouts": result["Timeouts"],
+                "Status": result["Status"],
                 "Notes": make_note(version, idea, result),
             })
 
@@ -77,9 +91,13 @@ def main():
                 "Version": version,
                 "Idea": idea,
                 "Final Value": "MISSING FILE",
+                "Total Return %": "MISSING FILE",
+                "Sharpe Ratio": "MISSING FILE",
+                "Max Drawdown": "MISSING FILE",
                 "Executed": "MISSING FILE",
                 "Rejected": "MISSING FILE",
                 "Timeouts": "MISSING FILE",
+                "Status": "MISSING FILE",
                 "Notes": f"{module_name}.py not found",
             })
             print(f"{version} skipped: {module_name}.py not found")
@@ -89,9 +107,13 @@ def main():
                 "Version": version,
                 "Idea": idea,
                 "Final Value": "ERROR",
+                "Total Return %": "ERROR",
+                "Sharpe Ratio": "ERROR",
+                "Max Drawdown": "ERROR",
                 "Executed": "ERROR",
                 "Rejected": "ERROR",
                 "Timeouts": "ERROR",
+                "Status": "ERROR",
                 "Notes": str(e),
             })
             print(f"{version} failed: {e}")
