@@ -24,7 +24,6 @@ class Bot:
         avg_volume = sum(recent_volumes) / len(recent_volumes)
 
         deviation = (close - avg_price) / avg_price
-
         high_volume = volume > avg_volume
 
         if deviation < -self.threshold and high_volume and inventory < self.max_inventory:
