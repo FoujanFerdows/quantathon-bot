@@ -1,6 +1,6 @@
 import time
 import pandas as pd
-import bot_template 
+import bot_meanrev
 
 def run_local_engine(team_bot, test_data):
     cash = 100000.0
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         exit()
 
     print("Initializing your Bot...")
-    my_bot = bot_template.Bot()
+    my_bot = bot_meanrev.Bot()
 
     print("Starting backtest (this might take a few seconds)...")
     result = run_local_engine(my_bot, market_data)
