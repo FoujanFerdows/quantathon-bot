@@ -1,30 +1,39 @@
 class Bot:
     def __init__(self):
-        self.ai_model = "Placeholder_for_Model"
+        # Store recent prices
+        self.prices = []
+        
+        # Parameters (you can tune later)
+        self.window = 5
+        self.trade_size = 5
+        self.max_inventory = 100
+        self.threshold = 0.01  # 1%
 
     def get_action(self, tick, cash, inventory):
-        if tick['close'] < 100 and cash > 5000:         
-            return {"action": "BUY", "quantity": 10}    
+        close = tick['close']
         
-        elif tick['volume'] > 150 and inventory > 0:    
-            return {"action": "SELL", "quantity": 5}    
-            
+        # Store price
+        self.prices.append(close)
+
+        # Not enough data yet → do nothing
+        if len(self.prices) < self.window:
+            return {"action": "HOLD", "quantity": 0}
+
+        # Get recent prices
+        recent_prices = self.prices[-self.window:]
+        avg_price = sum(recent_prices) / len(recent_prices)
+
+        # Calculate how far current price is from average
+        deviation = (close - avg_price) / avg_price
+
+        # BUY if price is lower than average (expect bounce)
+        if deviation < -self.threshold and inventory < self.max_inventory:
+            return {"action": "BUY", "quantity": self.trade_size}
+
+        # SELL if price is higher than average (expect drop)
+        elif deviation > self.threshold and inventory > -self.max_inventory:
+            return {"action": "SELL", "quantity": self.trade_size}
+
+        # Otherwise do nothing
         else:
-            return {"action": "HOLD", "quantity": 0}    
-
-
-
-
-
-    
-        
-
-"""
-RULES FOR THIS FILE:
-1. Keep the names 'class Bot:' and 'def get_action' (content within can be deleted) exactly as they are.
-2. Write your trading logic INSIDE 'get_action'.
-3. Everything else (including __init__) can be changed or deleted!
-4. __init__ is meant for uploading pre-trained machine learning models, but you can use it as you wish. 
-
-(You can delete this comment now.)
-"""
+            return {"action": "HOLD", "quantity": 0}
