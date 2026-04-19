@@ -1,4 +1,3 @@
-```
 ## Person 2 - Mean Reversion Bot
 
 Best version:
@@ -21,36 +20,13 @@ Additional tests:
 - window = 8, threshold = 0.02 → Final_Value: 100032.33, Executed: 122
 - stricter volume filter (volume > 1.1 * avg_volume) → Final_Value: 100042.30, Executed: 34
 
-Additional experiment — Momentum Confirmation (Rejected):
-- Added condition:
-  - BUY only if price is starting to rise (close > previous close)
-  - SELL only if price is starting to fall (close < previous close)
-- Increased trade_size to 10
-- Reduced threshold to 0.015
-
-Backtest result:
-- Final_Value: 100008.75
-- Executed: 2
-- Rejected: 0
-- Timeouts: 0
-- Sharpe_Ratio: 0.7387
-- Max_Drawdown: 0.0001
-
-Result:
-- Strategy became too restrictive
-- Almost no trades executed
-- Missed most opportunities
-
-Reverted to previous best version
-
 Conclusion:
 - Best-performing mean reversion version used:
   - window = 5
   - threshold = 0.02
   - volume > avg_volume
-- More selective trading improved performance
-- Over-filtering reduces opportunities
-- Overtrading reduces profits
+- More selective trading improved performance.
+- Overtrading reduced profits.
 
 ## Overview Table
 
@@ -64,8 +40,6 @@ Conclusion:
 | v5 | mean reversion | 100032.33 | 122 | 0 | 0 | Window 8, threshold 0.02 |
 | v6 | mean reversion + volume filter | 100043.36 | 36 | 0 | 0 | Best Person 2 version |
 | v7 | mean reversion + stricter volume filter | 100042.30 | 34 | 0 | 0 | Slightly worse than v6 |
-| v8 | mean reversion + momentum confirmation | 100008.75 | 2 | 0 | 0 | Too restrictive, almost no trades |
 
 - hybrid + continuous small trading → Final_Value: 99720.56, Executed: 510552, Rejected: 0, Timeouts: 0
 - Result: failed due to overtrading, reverted
-```
