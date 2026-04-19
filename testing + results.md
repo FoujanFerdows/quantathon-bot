@@ -30,3 +30,19 @@ df = pd.DataFrame(results)
 df.to_csv("backtest_results.csv", index=False)
 
 print(df)
+
+## Person 2 - Mean Reversion Bot
+
+Best version so far:
+- window = 5
+- threshold = 0.02
+- volume filter = volume > avg_volume
+- trade_size = 5
+- max_inventory = 100
+
+Backtest result:
+- Final_Value: 100043.36
+- Executed: 36
+- Rejected: 0
+- Timeouts: 0
+- Status: COMPLETED
